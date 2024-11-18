@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Mastermind_PE
 {
@@ -22,16 +24,33 @@ namespace Mastermind_PE
     {
         private string[] generatedCode; // De willekeurig gegenereerde code
         private int attempts = 0;
+        private DispatcherTimer timer;
+        DateTime clicked;
+        TimeSpan elapsedTime;
 
         public MainWindow()
         {
             InitializeComponent();
             GenerateRandomCode();
             OpvullenComboBoxes();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Tick += startcountdown;
         }
+        private void startcountdown(object sender, EventArgs e)
+        {
+            elapsedTime = DateTime.Now - clicked;
+            timerTextBox.Text = $"{elapsedTime.Seconds.ToString()} : {elapsedTime.Milliseconds.ToString().PadLeft(3, '0')} ";
+        }
+
+        
+        
+            
+        
 
         private void GenerateRandomCode()
         {
+            
             Random random = new Random();
             string[] Colors = { "Rood", "Geel", "Oranje", "Wit", "Groen", "Blauw" };
             generatedCode = Enumerable.Range(0, 4).Select(_ => Colors[random.Next(Colors.Length)]).ToArray();
@@ -76,6 +95,16 @@ namespace Mastermind_PE
             attempts++;
             this.Title = $"MasterMind ({string.Join(",", generatedCode)}), Poging: "+attempts;
 
+            timer.Start();
+            clicked = DateTime.Now;
+
+
+
+
+
+
+
+
 
 
 
@@ -112,5 +141,6 @@ namespace Mastermind_PE
                 label.BorderThickness = new Thickness(0);
             }
         }
+        
     }
 }
