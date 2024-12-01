@@ -28,7 +28,7 @@
         </StackPanel>
 
         <Button Content="Check Code" Width="100" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,288,0,0" Click="CheckCode_Click" />
-        <TextBox  Name ="timerTextBox" HorizontalAlignment="Left" Margin="467,294,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox  Name ="timerTextBox" HorizontalAlignment="Left" Margin="26,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

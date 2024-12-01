@@ -33,6 +33,7 @@ namespace Mastermind_PE
             InitializeComponent();
             GenerateRandomCode();
             OpvullenComboBoxes();
+            stopcountdown();
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += startcountdown;
@@ -40,13 +41,14 @@ namespace Mastermind_PE
         private void startcountdown(object sender, EventArgs e)
         {
             elapsedTime = DateTime.Now - clicked;
-            timerTextBox.Text = $"{elapsedTime.Seconds.ToString()} : {elapsedTime.Milliseconds.ToString().PadLeft(3, '0')} ";
+            timerTextBox.Text = $"{elapsedTime.Seconds.ToString()} ";
         }
+        
 
-        
-        
-            
-        
+
+
+
+
 
         private void GenerateRandomCode()
         {
@@ -99,7 +101,12 @@ namespace Mastermind_PE
             clicked = DateTime.Now;
 
 
-
+            if (attempts >= 10)
+            {
+               
+                timer.Stop();
+                Close();
+            }
 
 
 
@@ -141,6 +148,17 @@ namespace Mastermind_PE
                 label.BorderThickness = new Thickness(0);
             }
         }
-        
+        private void stopcountdown()
+        {
+            
+            double time = elapsedTime.Seconds;
+            if (time >= 10)
+            {
+                timer.Stop();
+                attempts++;
+            }
+
+        }
+
     }
 }
